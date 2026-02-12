@@ -1,7 +1,6 @@
 import sqlite3
 
 
-
 class DatabaseHandler:
 #defining the database handler class
 

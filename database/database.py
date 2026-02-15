@@ -3,7 +3,7 @@ from flask import request, Blueprint
 
 db_name = "swimmer_info.db"
 
-cre = Blueprint("cre", __name__, )
+# cre = Blueprint("cre", __name__, )
 
 def createTables():
     conn = sqlite3.connect(db_name)
@@ -84,16 +84,16 @@ def createTables():
 
 
 
-@cre.route("/createuser", methods=["POST"])
-def createUser():
-    with sqlite3.connect() as conn:
-        formDetails = request.form
-        rankings_ID = formDetails.get("SE_ID")
-        name  = formDetails.get("name")
-        email = formDetails.get("email")
-        password = formDetails.get("password")
-        conn.execute("INSERT INTO user (rankings_ID, username, password, name) VALUES (?, ?, ?, ?)")
-        conn.commit()
+# @cre.route("/createuser", methods=["POST"])
+# def createUser():
+#    with sqlite3.connect() as conn:
+#        formDetails = request.form
+#        rankings_ID = formDetails.get("SE_ID")
+#        name  = formDetails.get("name")
+#        email = formDetails.get("email")
+#        password = formDetails.get("password")
+#        conn.execute("INSERT INTO user (rankings_ID, username, password, name) VALUES (?, ?, ?, ?)")
+#        conn.commit()
 
 
 #createTables()

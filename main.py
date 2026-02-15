@@ -10,7 +10,7 @@ from routes.usercontrol import userLogin_bp                     # Import user co
 app = Flask(__name__)
 
 # Register blueprints
-app.register_blueprint(userLogin_bp, url_prefix='/user')        # Register user control blueprint
+app.register_blueprint(userLogin_bp)        # Register user control blueprint
 
 
 # Launch the application

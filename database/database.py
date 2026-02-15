@@ -1,9 +1,7 @@
 import sqlite3
-from flask import request, Blueprint
 
-db_name = "swimmer_info.db"
+db_name = "database/swimmer_info.db"
 
-# cre = Blueprint("cre", __name__, )
 
 def createTables():
     conn = sqlite3.connect(db_name)
@@ -15,14 +13,14 @@ def createTables():
     cursor.execute("""
         CREATE TABLE user (
             rankings_ID INTEGER NOT NULL UNIQUE PRIMARY KEY,
-            username TEXT NOT NULL UNIQUE,
+            email TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
             name TEXT NOT NULL,
-            CHECK (length(rankings_ID) < 11 AND length(rankings_ID) > 3),
-            CHECK (length(username) > 4 AND length(password) > 8 AND password LIKE '%[0-9]%')
+            CHECK (length(rankings_ID) < 11 AND length(rankings_ID) > 3)
                 );
         """)
 
+#            CHECK (password LIKE '%[0-9]%')
 
     cursor.execute("""
         CREATE TABLE race (
@@ -84,17 +82,32 @@ def createTables():
 
 
 
-# @cre.route("/createuser", methods=["POST"])
-# def createUser():
-#    with sqlite3.connect() as conn:
-#        formDetails = request.form
-#        rankings_ID = formDetails.get("SE_ID")
-#        name  = formDetails.get("name")
-#        email = formDetails.get("email")
-#        password = formDetails.get("password")
-#        conn.execute("INSERT INTO user (rankings_ID, username, password, name) VALUES (?, ?, ?, ?)")
-#        conn.commit()
+# Database access function to check if there is already a swimmer with the same SE_ID
+# -----------------------------------------------------------------------------------
+def check_existing_swimmer(SE_ID: int) -> bool:
+    with sqlite3.connect(db_name) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""SELECT * 
+                        FROM user 
+                        WHERE rankings_ID = ? """ , (str(SE_ID),))
+        result = cursor.fetchone()
+#        conn.close()
+
+        if result == None:
+            return False
+        else:
+            return True
 
 
-#createTables()
-#createUser()
+# Database access function to add a new swimmer to the database with the imputted details
+# ---------------------------------------------------------------------------------------
+def add_new_swimmer(SE_ID: int, name: str, email: str, password: str) -> bool:
+    with sqlite3.connect(db_name) as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO user (rankings_ID, email, password, name) VALUES (?, ?, ?, ?)", (str(SE_ID), email, password, name))
+        conn.commit()
+#        conn.close()
+        return True
+
+
+

@@ -4,22 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In</title>
+    <title>Swimmer Login</title>
 </head>
 
 <body>
-
 
 <div>
     <h1><i> 'App Name' </i></h1>
 </div>
 
 <div>
-    <h2>Log In</h2>
+    <h2>Swimmer Login</h2>
 </div>
 
 <div>
-    <form>
+    <form action="/login" method="POST">
+         <div>
+            <label for="SE_ID"> Swim England ID: </label>
+            <input name="SE_ID" id="SE_ID" type="number" required min="100" and max="9999999999"/>
+            <p> Don't know your Swim England ID? <a href="https://www.swimming.org/swimengland/club-member-check/">Find out here</a></p>
         <div>
             <label for="email">Email: </label>
             <input name="email" id="email" type="email"/>
@@ -31,13 +34,13 @@
         </div>
 
         <div>
-            <input type="submit" value="Sign-in" />
+            <input type="submit" value="Login" />
         </div>
     </form>
 </div>
 
 <p> or </p>
-<p> Don't have an account? <a href="createAccount.html">Sign up</a></p>
+<p> Don't have an account? <a href="/user/createAccount">Sign up</a></p>
 
 </body>
 </html>
